@@ -55,16 +55,17 @@ headerButton.addEventListener('click', (event) => {
     }
 });
 
-menuContainer.addEventListener(
-    'click',
-    (event) => {
-        event.stopPropagation();
-    },
-    false,
-);
-
-document.addEventListener('click', () => {
-    if (active) {
+document.addEventListener('click', (event) => {
+    let closeMenu = true;
+    if (event.target === menuContainer) {
+        closeMenu = false;
+    }
+    Array.from(menuContainer.children).forEach((el) => {
+        if (event.target === el) {
+            closeMenu = false;
+        }
+    });
+    if (active && closeMenu) {
         active = false;
         headerContainer.removeChild(menuContainer);
     }
